@@ -13,8 +13,13 @@ class App extends React.Component {
   getLocation = async () => {
     const API = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_EXPLORER_API_KEY}&q=${this.state.searchQuery}&format=json`;
     const res = await axios.get(API);
-    console.log(res.data[0])
-    this.setState({ location: res.data[0] });
+    const location = res.data[0];
+    console.log(location)
+    this.setState({ location });
+
+    const image_url = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_CITY_EXPLORER_API_KEY}&center=${location.lat},${location.lon}&size=${window.innerWidth}x300&format=jpg&zoom=12`
+
+    console.log(image_url)
   }
 
   render() {
