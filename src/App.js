@@ -8,11 +8,13 @@ class App extends React.Component {
       searchQuery: '',
       location: {},
       image_ur: '',
+      forecasts: [],
     }
   }
 
   getLocation = async () => {
     const API = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_MAP_KEY}&q=${this.state.searchQuery}&format=json`;
+    console.log('API', API);
     const res = await axios.get(API);
     const location = res.data[0];
     console.log(location)
@@ -25,6 +27,15 @@ class App extends React.Component {
     console.log(image_url)
 
     this.setState({ image_url });
+
+    const weatherUrl = `https://city-explorer-weather.herokuapp.com/weather?lat=100&lon=100`;
+    const weatherResponse = await axios.get(weatherUrl);
+
+    this.setState({
+      forecasts: weatherResponse.data,
+    });
+
+
   }
 
   render() {
@@ -37,6 +48,10 @@ class App extends React.Component {
           <h2>The city is: {this.state.location.display_name}</h2>
         }
         <img src={this.state.image_url} alt="location" />
+
+        <ul>
+          {this.state.forecasts.map((item, index) => <li key={index}>{JSON.stringify(item)}</li>)}
+        </ul>
       </>
     )
   }
