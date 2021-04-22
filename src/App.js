@@ -28,12 +28,23 @@ class App extends React.Component {
 
     this.setState({ image_url });
 
-    const weatherUrl = `https://city-explorer-weather.herokuapp.com/weather?lat=100&lon=100`;
+    const weatherUrl = `https://city-explorer-weather.herokuapp.com/weather?lat=${location.lat}&lon=${location.lon}`;
+
+    // const weatherUrl = `http://localhost:3001/weather?lat=${location.lat}&lon=${location.lon}`;
+
     const weatherResponse = await axios.get(weatherUrl);
 
     this.setState({
       forecasts: weatherResponse.data,
     });
+
+    const movieUrl = `https://city-explorer-weather.herokuapp.com/movies`;
+
+    const movieResponse = await axios.get(movieUrl);
+
+    this.setState({
+      movies: movieResponse.data,
+    })
 
 
   }
@@ -52,6 +63,8 @@ class App extends React.Component {
         <ul>
           {this.state.forecasts.map((item, index) => <li key={index}>{JSON.stringify(item)}</li>)}
         </ul>
+
+        <p>{JSON.stringify(this.state.movies)}</p>
       </>
     )
   }
