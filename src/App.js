@@ -22,13 +22,11 @@ class App extends React.Component {
 
     const image_url = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_MAP_KEY}&center=${location.lat},${location.lon}&size=${window.innerWidth}x300&format=jpg&zoom=12`;
 
-    // e.g. https://maps.locationiq.com/v3/staticmap?key=pk.21783be57f80675e394cca25994f4ece&center=47.6038321,-122.3300624&size=918x300&format=jpg&zoom=12
-
-    console.log(image_url)
-
     this.setState({ image_url });
 
-    const weatherUrl = `https://city-explorer-weather.herokuapp.com/weather?lat=${location.lat}&lon=${location.lon}`;
+    const baseUrl = 'https://city-explorer-api-301d73.herokuapp.com'
+
+    const weatherUrl = `${baseUrl}/weather?lat=${location.lat}&lon=${location.lon}`;
 
     // const weatherUrl = `http://localhost:3001/weather?lat=${location.lat}&lon=${location.lon}`;
 
@@ -38,7 +36,7 @@ class App extends React.Component {
       forecasts: weatherResponse.data,
     });
 
-    const movieUrl = `https://city-explorer-weather.herokuapp.com/movies`;
+    const movieUrl = `${baseUrl}/movies`;
 
     const movieResponse = await axios.get(movieUrl);
 
